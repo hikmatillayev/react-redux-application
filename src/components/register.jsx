@@ -2,18 +2,28 @@ import { useState } from "react";
 import { icon } from "../constants";
 import { Input } from "../ui";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUserStart } from "../slice/auth";
+import { registerUserFailure, registerUserStart, registerUserSuccess } from "../slice/auth";
+import AuthService from "../service/auth";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isloading } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
-  const registerHandler = (e) => {
+  const registerHandler = async(e) => {
     e.preventDefault();
     dispatch(registerUserStart());
+    const user={username:name, email, password}
+    try{
+      const response=await AuthService.userRegister(user)
+    
+      console.log(user);
+      dispatch(registerUserSuccess());
+    } catch (error){
+      dispatch(registerUserFailure());
+    }
   };
 
   return (
@@ -45,12 +55,12 @@ const Register = () => {
           />
 
           <button
-            disabled={isloading}
+            disabled={isLoading}
             onClick={registerHandler}
             className="w-100 btn btn-lg btn-primary mt-2"
             type="submit"
           >
-            {isloading ? 'loading...' : 'Register'}
+            {isLoading ? 'loading...' : 'Register'}
           </button>
           <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
         </form>
