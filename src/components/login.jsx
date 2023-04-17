@@ -2,7 +2,8 @@ import { useState } from "react";
 import { icon } from "../constants";
 import { Input } from "../ui";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserStart } from "../slice/auth";
+import { signUserFailure, signUserStart, signUserSuccess } from "../slice/auth";
+import AuthService from "../service/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,9 +11,16 @@ const Login = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
-    dispatch(loginUserStart());
+    dispatch(signUserStart());
+    const user = { email, password }
+    try {
+      const response = await AuthService.userLogin(user)
+      dispatch(signUserSuccess(response.user));
+    } catch (error) {
+      dispatch(signUserFailure(error.response.data.errors));
+    }
   };
 
   return (
@@ -43,7 +51,7 @@ const Login = () => {
             className="w-100 btn btn-lg btn-primary mt-2"
             type="submit"
           >
-           {isLoading ? 'loading...' : 'Login'}
+            {isLoading ? 'loading...' : 'Login'}
           </button>
           <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
         </form>
