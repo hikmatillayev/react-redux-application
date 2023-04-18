@@ -5,3 +5,11 @@ export const setItem = (key, data) => {
         console.log("Error savong data")
     }
 }
+
+export const getItem=key=>{
+    try{
+       return localStorage.getItem(key)
+    } catch (error){
+
+    }
+}
