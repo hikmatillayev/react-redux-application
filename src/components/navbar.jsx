@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { logo } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../slice/auth";
+import { removeItem } from "../helpers/persistance-storage";
 
 const Navbar = () => {
   const { loggedIn, user } = useSelector(state => state.auth)
