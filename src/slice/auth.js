@@ -18,15 +18,19 @@ export const authSlice = createSlice({
     signUserSuccess: (state, action) => {
       state.loggedIn = true
       state.isLoading = false
-      state.user=action.payload
+      state.user = action.payload
       setItem('token', action.payload.token)
     },
-    signUserFailure:(state, action)=>{
+    signUserFailure: (state, action) => {
       state.isLoading = false
       state.error = action.payload
+    },
+    logoutUser: state => {
+      state.user = null
+      state.loggedIn = false
     }
   },
 });
 
-export const {signUserStart, signUserSuccess, signUserFailure } = authSlice.actions;
+export const { signUserStart, signUserSuccess, signUserFailure, logoutUser } = authSlice.actions;
 export default authSlice.reducer;
