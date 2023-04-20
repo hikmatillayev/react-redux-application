@@ -9,6 +9,7 @@ import {Loader} from '../ui'
 const ArticleDetail = () => {
     const { slug } = useParams()
     const dispatch = useDispatch()
+    console.log(dispatch)
     const { articleDetail, isLoading } = useSelector(state => state.article)
 
     const getArticleDetail = async () => {
