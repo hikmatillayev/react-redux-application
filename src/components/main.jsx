@@ -8,6 +8,7 @@ import { useEffect } from "react"
 const Main = () => {
   const dispatch = useDispatch()
   const { articles, isLoading } = useSelector(state => state.article)
+  const { loggedIn, user } = useSelector(state => state.auth)
   const navigate = useNavigate()
 
   const getArticles = async () => {
@@ -17,6 +18,15 @@ const Main = () => {
       dispatch(getArticleSucces(response.articles))
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const deleteArticle = async (slug) => {
+    try {
+      getArticles()
+      await ArticleService.deleteArticle(slug)
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -61,8 +71,18 @@ const Main = () => {
                       >
                         View
                       </button>
-                      <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                      <button type="button" className="btn btn-sm btn-outline-danger">Delete</button>
+                      {loggedIn && user.username === item.author.username && (
+                        <>
+                          <button type="button" className="btn btn-sm btn-outline-secondary">
+                            Edit
+                          </button>
+                          <button type="button" className="btn btn-sm btn-outline-danger"
+                            onClick={() => deleteArticle(item.slug)}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
                     </div>
                     <small className="text-body-secondary fw-bold text-capitalize">{item.author.username}</small>
                   </div>
