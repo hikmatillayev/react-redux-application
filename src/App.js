@@ -5,8 +5,6 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { signUserSuccess } from "./slice/auth"
 import { getItem } from "./helpers/persistance-storage"
-import ArticleService from "./service/article"
-import { getArticleSucces, getArticlesStart } from "./slice/article"
 
 const App = () => {
   const dispatch = useDispatch()
@@ -18,22 +16,11 @@ const App = () => {
     } catch (error) { }
   }
 
-  const getArticles = async () => {
-    dispatch(getArticlesStart())
-    try {
-      const response = await ArticleService.getArticles()
-      dispatch(getArticleSucces(response.articles))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
     const token = getItem('token')
     if (token) {
       getUser()
-    }
-    getArticles()
+    }   
   }, [])
 
   return (
@@ -46,7 +33,6 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/article/:slug" element={<ArticleDetail />} />
           <Route path="/create-article" element={<CreateArticle />} />
-          <Route path="/a" element={<CreateArticle />} />
         </Routes>
       </div>
     </div>
