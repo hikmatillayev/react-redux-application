@@ -44,8 +44,7 @@ const EditArticle = () => {
     }
 
     const formProps = { title, setTitle, description, setDescription, body, setBody, formSubmit }
-
-
+    
     return (
         <div className="text-center">
             <h1 className="fs-2">EditArticle</h1>
