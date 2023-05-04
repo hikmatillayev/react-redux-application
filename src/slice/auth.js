@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setItem } from "../helpers/persistance-storage";
 
-const initialState = {
-  isLoading: false,
-  loggedIn: false,
-  error: null,
-  user: null,
-};
-
 export const authSlice = createSlice({
   name: "auth",
-  initialState,
+
+  initialState: {
+    isLoading: false,
+    loggedIn: false,
+    error: null,
+    user: null,
+  },
+
   reducers: {
     signUserStart: state => {
       state.isLoading = true;
