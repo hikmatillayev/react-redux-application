@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import ArticleService from "../service/article"
 
-const ArticleCard = ({item, getArticles}) => {
+const ArticleCard = ({item, getArticles,}) => {
 
     const { loggedIn, user } = useSelector(state => state.auth)
     const navigate = useNavigate()
