@@ -10,7 +10,7 @@ const TextArea = ({ label, state, setState, height='100px'}) => {
                 style={{height:'100px'}}
                 >
             </textarea>
-            <label htmlFor="floatingTextarea">Comments</label>
+            <label htmlFor="floatingTextarea">{label}</label>
         </div>
     )
 }
